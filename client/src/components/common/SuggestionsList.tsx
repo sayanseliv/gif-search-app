@@ -19,7 +19,10 @@ export const SuggestionsList: React.FC<SuggestionsListProps> = ({
 	}
 
 	return (
-		<div className='absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto'>
+		<div
+			className='absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto'
+			role='listbox'
+			aria-label='Search suggestions'>
 			{suggestions.length === 0 && searchHistory.length > 0 && (
 				<div className='p-2'>
 					<div className='text-xs text-gray-500 font-medium mb-2 px-2'>
@@ -29,7 +32,9 @@ export const SuggestionsList: React.FC<SuggestionsListProps> = ({
 						<button
 							key={`history-${index}`}
 							onClick={() => onSuggestionClick(item)}
-							className='w-full text-left px-3 py-2 hover:bg-gray-100 rounded text-sm transition-colors'>
+							className='w-full text-left px-3 py-2 hover:bg-gray-100 rounded text-sm transition-colors'
+							role='option'
+							aria-selected={false}>
 							<span className='text-gray-600'>🕐</span> {item}
 						</button>
 					))}

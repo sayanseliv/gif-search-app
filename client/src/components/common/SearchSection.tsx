@@ -116,12 +116,14 @@ const SearchSection = () => {
 					placeholder='Search all gifs'
 					className='w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:border-blue-400 outline-none transition-colors'
 					autoComplete='off'
+					aria-label='Search GIFs'
 				/>
 
 				{searchQuery.length > 0 && (
 					<button
 						onClick={handleClean}
-						className='absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-blue-400 transition-colors z-10'>
+						className='absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-blue-400 transition-colors z-10'
+						aria-label='Clear search'>
 						<CircleX size={20} />
 					</button>
 				)}
@@ -136,7 +138,8 @@ const SearchSection = () => {
 			<button
 				onClick={() => handleSearch()}
 				disabled={isLoading || !searchQuery.trim()}
-				className='flex items-center justify-center px-3 py-2 bg-gray-900 hover:bg-blue-400 disabled:bg-gray-400 text-white rounded-lg transition-colors font-medium min-w-[48px]'>
+				className='flex items-center justify-center px-3 py-2 bg-gray-900 hover:bg-blue-400 disabled:bg-gray-400 text-white rounded-lg transition-colors font-medium min-w-[48px]'
+				aria-label='Search'>
 				{isLoading ? (
 					<Loader2 className='w-5 h-5 animate-spin' />
 				) : (

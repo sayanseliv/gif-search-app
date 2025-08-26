@@ -35,14 +35,11 @@ const getTrendingGifs = async (): Promise<GifResponse> => {
 	return response.json();
 };
 const getGifById = async (id: string): Promise<{ data: GifData }> => {
-	console.log('Fetching GIF with ID:', id);
 	const response = await fetch(`${API_BASE}/gifs/gif/${id}`);
 	if (!response.ok) {
-		console.error('Response status:', response.status, response.statusText);
 		throw new Error('Failed to get GIF details');
 	}
 	const data = await response.json();
-	console.log('GIF details response:', data);
 	return data;
 };
 const getSuggestions = async (params: SuggestionParams): Promise<SuggestionResponse> => {
@@ -119,12 +116,12 @@ export const usePrefetchGif = () => {
 
 	return useMutation({
 		mutationFn: async (gif: GifData) => {
-			// Prefetch the gif image
-			const link = document.createElement('link');
-			link.rel = 'prefetch';
-			link.href = gif.images.fixed_height.url;
-			document.head.appendChild(link);
-
+			if (!document.querySelector(`link[href="${gif.images.fixed_height.url}"]`)) {
+				const link = document.createElement('link');
+				link.rel = 'prefetch';
+				link.href = gif.images.fixed_height.url;
+				document.head.appendChild(link);
+			}
 			return gif;
 		},
 		onSuccess: (gif) => {

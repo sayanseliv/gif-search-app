@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import type { Variants } from 'framer-motion';
-import type { ReactNode } from 'react';
+import { CircleX } from 'lucide-react';
+import { memo, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 
 type Direction =
@@ -194,7 +195,10 @@ const Modal: React.FC<ModalProps> = ({ show, onClose, children, direction = 'cen
 						initial='hidden'
 						animate='visible'
 						exit='hidden'
-						onClick={onClose}>
+						onClick={onClose}
+						role='dialog'
+						aria-modal='true'
+						tabIndex={-1}>
 						<motion.div
 							className={
 								'absolute top-1/2 left-1/2 w-[90vw] md:w-fit bg-white p-4 md:p-8 rounded-lg shadow-xl'
@@ -204,6 +208,12 @@ const Modal: React.FC<ModalProps> = ({ show, onClose, children, direction = 'cen
 							animate='visible'
 							exit='hidden'
 							onClick={stop}>
+							<button
+								onClick={onClose}
+								aria-label='Close modal'
+								className='absolute top-1 right-1 bg-stone-900 rounded-full text-gray-500  hover:text-blue-500 transition-colors'>
+								<CircleX />
+							</button>
 							{children}
 						</motion.div>
 					</motion.div>
@@ -213,4 +223,4 @@ const Modal: React.FC<ModalProps> = ({ show, onClose, children, direction = 'cen
 	);
 };
 
-export default Modal;
+export default memo(Modal);
