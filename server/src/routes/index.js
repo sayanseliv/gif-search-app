@@ -1,6 +1,7 @@
 import express from 'express';
 import gifRouter from './gifs.js';
 import { globalErrorHandler, notFoundHandler } from '../middleware/errorHandlers.js';
+import { getGifDetails } from '../controllers/gifsController.js';
 
 const router = express.Router();
 
@@ -14,6 +15,7 @@ router.get('/', (req, res) => {
 });
 
 router.use('/gifs', gifRouter);
+// router.get('/gif/:id', getGifDetails);
 
 router.use(notFoundHandler);
 
