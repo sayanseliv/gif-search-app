@@ -49,7 +49,9 @@ const Header = () => {
 	};
 
 	return (
-		<header className='bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 p-4 border-b-1 border-blue-400 transition-colors duration-300'>
+		<header
+			id='main-header'
+			className='bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 p-4 border-b-1 border-blue-400 transition-colors duration-300'>
 			<div className='container mx-auto flex justify-between items-center flex-wrap sm:flex-nowrap gap-2'>
 				<h1 className='shrink-0 text-2xl font-bold'>GIF Search</h1>
 				<SearchSection />

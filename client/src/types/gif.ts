@@ -48,6 +48,7 @@ export interface GifUser {
 }
 
 export interface GifData {
+	type: 'gif' | 'stickers';
 	id: string;
 	url: string;
 	slug: string;

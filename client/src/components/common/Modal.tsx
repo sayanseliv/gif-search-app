@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import type { Variants } from 'framer-motion';
-import styles from './Modal.module.css';
+import type { ReactNode } from 'react';
+import { createPortal } from 'react-dom';
 
 type Direction =
 	| 'center'
@@ -168,6 +169,12 @@ const getBackdropVariants = (direction: Direction): Variants => {
 		},
 	};
 };
+interface Props {
+	children?: ReactNode;
+}
+const ModalWrapper = ({ children }: Props) => {
+	return createPortal(children, document.body);
+};
 
 const Modal: React.FC<ModalProps> = ({ show, onClose, children, direction = 'center' }) => {
 	const stop = (e: React.MouseEvent) => {
@@ -176,27 +183,33 @@ const Modal: React.FC<ModalProps> = ({ show, onClose, children, direction = 'cen
 	const modalVariants = getModalVariants(direction);
 	const backdropVariants = getBackdropVariants(direction);
 	return (
-		<AnimatePresence>
-			{show && (
-				<motion.div
-					className={styles.modalBackdrop}
-					variants={backdropVariants}
-					initial='hidden'
-					animate='visible'
-					exit='hidden'
-					onClick={onClose}>
+		<ModalWrapper>
+			<AnimatePresence>
+				{show && (
 					<motion.div
-						className={styles.modalContent}
-						variants={modalVariants}
+						className={
+							'fixed inset-0 bg-black/50 z-[1000] flex items-center justify-center'
+						}
+						variants={backdropVariants}
 						initial='hidden'
 						animate='visible'
 						exit='hidden'
-						onClick={stop}>
-						{children}
+						onClick={onClose}>
+						<motion.div
+							className={
+								'absolute top-1/2 left-1/2 w-[90vw] md:w-fit bg-white p-4 md:p-8 rounded-lg shadow-xl'
+							}
+							variants={modalVariants}
+							initial='hidden'
+							animate='visible'
+							exit='hidden'
+							onClick={stop}>
+							{children}
+						</motion.div>
 					</motion.div>
-				</motion.div>
-			)}
-		</AnimatePresence>
+				)}
+			</AnimatePresence>
+		</ModalWrapper>
 	);
 };
 

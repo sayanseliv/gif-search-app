@@ -78,21 +78,23 @@ const GifCards = () => {
 	}
 
 	return (
-		<div className='flex flex-col items-center'>
-			<div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4'>
-				{gifs.map((gif) => (
-					<GifCard gif={gif} onShowDetails={showGifDetails} key={gif.id} />
-				))}
+		<>
+			<div className='flex flex-col items-center'>
+				<div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4'>
+					{gifs.map((gif) => (
+						<GifCard gif={gif} onShowDetails={showGifDetails} key={gif.id} />
+					))}
+				</div>
+				{hasNextPage && (
+					<button
+						onClick={() => fetchNextPage()}
+						className='mt-6 px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors'>
+						Load more
+					</button>
+				)}
 			</div>
-			{hasNextPage && (
-				<button
-					onClick={() => fetchNextPage()}
-					className='mt-6 px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors'>
-					Load more
-				</button>
-			)}
 			<Modal show={isModalOpen} onClose={closeModal} direction='center'>
-				<div className='p-6 bg-white dark:bg-gray-800 rounded-lg max-w-lg w-full'>
+				<div className='p-6 bg-white dark:bg-gray-800 rounded-lg max-w-full  w-full md:w-[90vw] md:max-w-lg'>
 					{detailsLoading ? (
 						<div className='text-center'>Loading...</div>
 					) : gifDetails ? (
@@ -103,20 +105,20 @@ const GifCards = () => {
 								className='w-full h-64 object-cover rounded'
 							/>
 							<div>
-								<h2 className='text-xl font-bold'>
+								<h2 className='text-xl font-bold text-gray-300'>
 									{gifDetails.title || 'Untitled'}
 								</h2>
-								<p className='text-sm text-gray-600 dark:text-gray-300'>
+								<p className='text-sm text-gray-300'>
 									Author: {gifDetails.username || 'Unknown'}
 								</p>
-								<p className='text-sm text-gray-600 dark:text-gray-300'>
+								<p className='text-sm text-gray-300'>
 									Creation date: {gifDetails.import_datetime || 'Not specified'}
 								</p>
 							</div>
-							<div className='flex gap-4'>
+							<div className='flex flex-wrap gap-4'>
 								<button
 									onClick={handleCopyLink}
-									className='flex items-center gap-2 px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded transition-colors'>
+									className='flex items-center gap-2 px-4 py-2 bg-gray-700 text-white hover:bg-gray-300 dark:hover:bg-gray-600 rounded transition-colors'>
 									{isCopied ? (
 										<Check className='w-5 h-5 text-green-500' />
 									) : (
@@ -137,7 +139,7 @@ const GifCards = () => {
 					)}
 				</div>
 			</Modal>
-		</div>
+		</>
 	);
 };
 export default GifCards;
