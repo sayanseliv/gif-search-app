@@ -1,30 +1,13 @@
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 import type { GifData, SearchParams } from '../types/gif';
+import type { GifStore } from '../types/store';
+import {
+  DEFAULT_SEARCH_PARAMS,
+  GIF_STORE_NAME,
+  MAX_SEARCH_HISTORY,
+} from '../constants/gif';
 
-interface GifStore {
-  // State
-  searchQuery: string;
-  searchHistory: string[];
-  selectedGif: GifData | null;
-  searchParams: SearchParams;
-  isDetailModalOpen: boolean;
-  suggestions: string[];
-  showSuggestions: boolean;
-
-  // Actions
-  setSearchQuery: (query: string) => void;
-  clearSearchQuery: () => void;
-  addToSearchHistory: (query: string) => void;
-  clearSearchHistory: () => void;
-  setSuggestions: (suggestions: string[]) => void;
-  setShowSuggestions: (show: boolean) => void;
-  setSelectedGif: (gif: GifData | null) => void;
-  setSearchParams: (params: Partial<SearchParams>) => void;
-  openDetailModal: (gif: GifData) => void;
-  closeDetailModal: () => void;
-  downloadGif: (gif: GifData) => Promise<void>;
-}
 export const useGifStore = create<GifStore>()(
   devtools(
     persist(
@@ -33,11 +16,7 @@ export const useGifStore = create<GifStore>()(
         searchQuery: '',
         searchHistory: [],
         selectedGif: null,
-        searchParams: {
-          q: '',
-          limit: 25,
-          offset: 0,
-        },
+        searchParams: DEFAULT_SEARCH_PARAMS,
         isDetailModalOpen: false,
         suggestions: [],
         showSuggestions: false,
@@ -52,7 +31,7 @@ export const useGifStore = create<GifStore>()(
             {
               searchQuery: '',
               showSuggestions: false,
-              searchParams: { q: '', limit: 25, offset: 0 },
+              searchParams: DEFAULT_SEARCH_PARAMS,
             },
             false,
             'clearSearchQuery'
@@ -65,7 +44,7 @@ export const useGifStore = create<GifStore>()(
               const newHistory = [
                 query,
                 ...state.searchHistory.filter((q) => q !== query),
-              ].slice(0, 10);
+              ].slice(0, MAX_SEARCH_HISTORY);
               return { searchHistory: newHistory };
             },
             false,
@@ -135,7 +114,7 @@ export const useGifStore = create<GifStore>()(
         },
       }),
       {
-        name: 'gif-search-storage',
+        name: GIF_STORE_NAME,
         partialize: (state) => ({
           searchHistory: state.searchHistory,
           searchParams: state.searchParams,

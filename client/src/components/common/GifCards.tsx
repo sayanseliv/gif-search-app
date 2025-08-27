@@ -2,11 +2,14 @@ import { useState } from 'react';
 import { useClipboard } from '@custom-react-hooks/use-clipboard';
 import { Copy, Download, Check } from 'lucide-react';
 
-import { useGifDetails, useLoadMoreSearchGifs } from '../hooks/useGifQueries';
-import type { GifData } from '../types/gif';
+import {
+  useGifDetails,
+  useLoadMoreSearchGifs,
+} from '../../hooks/useGifQueries';
+import type { GifData } from '../../types/gif';
 import GifCard from './GifCard';
-import { useGifStore } from './gifStore';
-import Modal from '../components/common/Modal';
+import { useGifStore } from '../../stores/gifStore';
+import Modal from './Modal';
 
 const GifCards = () => {
   const [selectedGif, setSelectedGif] = useState<GifData | null>(null);

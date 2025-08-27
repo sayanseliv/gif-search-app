@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import type { GifData } from '../types/gif';
+import type { GifData } from '../../types/gif';
 
 type GifCardProps = {
   gif: GifData;
