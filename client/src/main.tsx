@@ -6,19 +6,19 @@ import './index.css';
 import App from './App.tsx';
 
 const queryClient = new QueryClient({
-	defaultOptions: {
-		queries: {
-			retry: 2,
-			staleTime: 1000 * 60 * 5,
-			gcTime: 1000 * 60 * 10,
-		},
-	},
+  defaultOptions: {
+    queries: {
+      retry: 2,
+      staleTime: 1000 * 60 * 5,
+      gcTime: 1000 * 60 * 10,
+    },
+  },
 });
 
 createRoot(document.getElementById('root')!).render(
-	<StrictMode>
-		<QueryClientProvider client={queryClient}>
-			<App />
-		</QueryClientProvider>
-	</StrictMode>
+  <StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <App />
+    </QueryClientProvider>
+  </StrictMode>
 );
